@@ -1,0 +1,3 @@
+#!/bin/sh
+
+find "$PWD" -type f -not -path "$PWD/.*" -not -path "$PWD/*/.*" -print

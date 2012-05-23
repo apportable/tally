@@ -1,0 +1,8 @@
+#!/bin/awk -f
+
+BEGIN               {count=0}
+/^\s*$/             {next}          # Skip blank lines
+/^\s*#.*$/          {next}          # Skip comments
+/^=begin$/,/^=end$/ {next}          # Skip multi-line comments
+/^.+$/              {count++}
+END                 {print count}

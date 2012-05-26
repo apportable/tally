@@ -1,3 +1,25 @@
-#!/bin/sh
+#!/bin/bash
 
-find "$PWD" -type f -not -path "$PWD/.*" -not -path "$PWD/*/.*" -print
+# Prevent for loops from splitting filenames containing whitespace
+IFS="
+"
+
+declare -A SUBTOTAL
+
+count() {
+    : $((SUBTOTAL[$1] += $(./$1_count $2)))
+}
+
+for FILE in $(find "$PWD" -type f -not -path "$PWD/.*"); do
+    case $FILE in
+        *.awk) count awk $FILE;;
+        *.rb)  count ruby $FILE;;
+    esac
+done
+
+for KEY in ${!SUBTOTAL[@]}; do
+    printf "%-8s %d\n" $KEY: ${SUBTOTAL[$KEY]}
+    : $((TOTAL += ${SUBTOTAL[$KEY]}))
+done
+
+printf "%-8s %d\n" total: $TOTAL

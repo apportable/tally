@@ -10,10 +10,17 @@ count() {
     : $((SUBTOTAL[$1] += $(./$1_count $2)))
 }
 
+detect() {
+    if grep '#!.*/awk' <<< "$(head -1 $1)" >/dev/null; then count awk $1
+    elif grep '#!.*/ruby' <<< "$(head -1 $1)" >/dev/null; then count ruby $1
+    fi
+}
+
 for FILE in $(find "$PWD" -type f -not -path "$PWD/.*"); do
     case $FILE in
         *.awk) count awk $FILE;;
         *.rb)  count ruby $FILE;;
+        *)     detect $FILE;;
     esac
 done
 

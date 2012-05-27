@@ -6,14 +6,22 @@ IFS="
 
 declare -A SUBTOTAL
 
+add() {
+    : $((SUBTOTAL[$1] += $2))
+}
+
 count() {
-    : $((SUBTOTAL[$1] += $(./$1_count $2)))
+    case $1 in
+        ruby)       add $1 $(./ruby_count $2);;
+        awk|shell)  add $1 $(./generic_count $2);;
+    esac
 }
 
 detect() {
     case $(head -1 $1) in
         \#!*/awk*)  count awk $1;;
         \#!*/ruby*) count ruby $1;;
+        \#!*/??sh*) count shell $1;;
     esac
 }
 

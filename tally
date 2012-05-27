@@ -11,9 +11,10 @@ count() {
 }
 
 detect() {
-    if grep '#!.*/awk' <<< "$(head -1 $1)" >/dev/null; then count awk $1
-    elif grep '#!.*/ruby' <<< "$(head -1 $1)" >/dev/null; then count ruby $1
-    fi
+    case $(head -1 $1) in
+        \#!*/awk*)  count awk $1;;
+        \#!*/ruby*) count ruby $1;;
+    esac
 }
 
 for FILE in $(find "$PWD" -type f -not -path "$PWD/.*"); do

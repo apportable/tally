@@ -1,0 +1,6 @@
+#!/bin/awk -f
+
+BEGIN       {count=0}
+/^\s*$/     {next}          # Skip blank lines
+/^.+$/      {count++}
+END         {print count}

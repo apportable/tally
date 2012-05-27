@@ -14,6 +14,7 @@ count() {
     case $1 in
         ruby)       add $1 $(./ruby_count $2);;
         awk|shell)  add $1 $(./generic_count $2);;
+        c|css)      add $1 $(./stripcmt $2 | ./basic_count);;
     esac
 }
 
@@ -29,6 +30,8 @@ for FILE in $(find "$PWD" -type f -not -path "$PWD/.*"); do
     case $FILE in
         *.awk) count awk $FILE;;
         *.rb)  count ruby $FILE;;
+        *.c)   count c $FILE;;
+        *.css) count css $FILE;;
         *)     detect $FILE;;
     esac
 done

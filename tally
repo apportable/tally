@@ -12,9 +12,9 @@ add() {
 
 count() {
     case $1 in
-        ruby)       add $1 $(./ruby_count $2);;
-        awk|shell)  add $1 $(./generic_count $2);;
-        c|css)      add $1 $(./stripcmt $2 | ./basic_count);;
+        ruby)       add $1 $(ruby_count $2);;
+        awk|shell)  add $1 $(generic_count $2);;
+        c|css)      add $1 $(stripcmt $2 | wc -l);;
     esac
 }
 

@@ -1,6 +1,8 @@
 #!/usr/bin/lua
 
 local lfs = require "lfs"
+local subtotals = {}
+local total = 0
 
 local function dirtree(dir)
     assert(dir and dir ~= "", "directory parameter is missing or empty")
@@ -74,8 +76,6 @@ local function countlines(filename, comment)
     return count
 end
 
-local subtotals = {}
-
 for filename in dirtree(os.getenv("PWD")) do
     local filetype = findtype(filename)
     if filetype then
@@ -89,5 +89,8 @@ for filename in dirtree(os.getenv("PWD")) do
 end
 
 for k, v in pairs(subtotals) do
+    total = total + v
     print(k, v)
 end
+
+print("Total", total)

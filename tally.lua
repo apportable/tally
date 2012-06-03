@@ -37,9 +37,14 @@ local extensions = {
 }
 
 local hashbangs = {
-    Lua = "^#!.*/bash",
+    Lua = "^#!.*/lua",
     AWK = "^#!.*/awk",
     SED = "^#!.*/sed",
+    Shell = "^#!.*/.?.?sh",
+}
+
+local comments = {
+    Lua = "%-%-"
 }
 
 local function findtype(filename)
@@ -58,7 +63,31 @@ local function findtype(filename)
     end
 end
 
+local function countlines(filename, comment)
+    local comment = comment or "#"
+    local count = 0
+    for line in io.lines(filename) do
+        if not line:find("^%s*$") and not line:find("^%s*" .. comment) then
+            count = count + 1
+        end
+    end
+    return count
+end
+
+local subtotals = {}
+
 for filename in dirtree(os.getenv("PWD")) do
     local filetype = findtype(filename)
-    if filetype then print(filetype, filename) end
+    if filetype then
+        local c = comments[filetype]
+        if subtotals[filetype] then
+            subtotals[filetype] = subtotals[filetype] + countlines(filename, c)
+        else
+            subtotals[filetype] = countlines(filename, c)
+        end
+    end
+end
+
+for k, v in pairs(subtotals) do
+    print(k, v)
 end

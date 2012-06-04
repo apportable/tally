@@ -88,9 +88,9 @@ for filename in dirtree(os.getenv("PWD")) do
     end
 end
 
-for k, v in pairs(subtotals) do
-    total = total + v
-    print(k, v)
+for language, subtotal in pairs(subtotals) do
+    total = total + subtotal
+    print(language, subtotal)
 end
 
 print("Total", total)

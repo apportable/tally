@@ -1,5 +1,11 @@
-install: *_count stripcmt tally
-	mkdir -p ~/.local/bin
-	install -pm0755 $^ ~/.local/bin
+PREFIX  = ~/.local
+INSTALL = install -Dpm0755
 
-.PHONY: install
+install: tally.lua
+	$(INSTALL) $< $(DESTDIR)$(PREFIX)/bin/tally
+
+uninstall:
+	$(RM) $(DESTDIR)$(PREFIX)/bin/tally
+
+
+.PHONY: install uninstall

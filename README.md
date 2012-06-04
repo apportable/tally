@@ -13,7 +13,11 @@ Under development. Currently only semi-accurate.
 Installation
 ------------
 
-    make install PREFIX=/usr/local
+You can either install the required [LuaFileSystem] module and then install
+Tally manually using `make install` or download a [packaged release].
+
+[LuaFileSystem]: http://keplerproject.github.com/luafilesystem/
+[packaged release]: https://github.com/craigbarnes/tally/downloads
 
 Usage
 -----

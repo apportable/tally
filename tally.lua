@@ -63,7 +63,7 @@ local hashbangs = {
     Python = "^#!.*/python",
     Ruby = "^#!.*/ruby",
     SED = "^#!.*/sed",
-    Shell = "^#!.*/b?[ackz]sh",
+    Shell = "^#!.*/b?[ackz]?sh",
     TCL = "^#!.*/tcl",
 }
 

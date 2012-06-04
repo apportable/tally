@@ -13,17 +13,7 @@ Under development. Currently only semi-accurate.
 Installation
 ------------
 
-There's nothing to compile. Just run `make install` or copy the `tally`
-script to your preferred `bin` directory.
-
-e.g.
-
     make install PREFIX=/usr/local
-
-or
-
-    cp tally ~/.local/bin
-
 
 Usage
 -----

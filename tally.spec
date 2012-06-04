@@ -4,6 +4,7 @@ Release:        1%{?dist}
 Summary:        Source code line counter
 License:        ISC
 URL:            https://github.com/craigbarnes/tally
+BuildArch:      noarch
 Source0:        %{url}/downloads/%{name}-%{version}.tar.gz
 Requires:       lua-filesystem
 

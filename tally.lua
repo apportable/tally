@@ -71,6 +71,7 @@ local comments = {
     AWK = "#",
     JavaScript = "//",
     Lua = "%-%-",
+    Make = "#",
     Perl = "#",
     Python = "#",
     Ruby = "#",
@@ -83,6 +84,8 @@ local function findtype(filename)
     local ext = filename:match("^.*%.(.*)$")
     if ext and extensions[ext:lower()] then
         return extensions[ext:lower()]
+    elseif filename:match("^.*[Mm]akefile$") then
+        return "Make"
     else
         local hashbang = firstline(filename)
         if hashbang and hashbang:sub(1, 2) == "#!" then

@@ -17,7 +17,7 @@ Requires:       lua-filesystem
 
 %install
 rm -rf %{buildroot}
-make install PREFIX=%{_prefix} DESTDIR=%{buildroot}
+make install PREFIX=%{_prefix} BINDIR=%{_bindir} DESTDIR=%{buildroot}
 
 
 %files

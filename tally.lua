@@ -121,6 +121,10 @@ for filename in dirtree(os.getenv("PWD")) do
     end
 end
 
+local function print(left, right)
+    io.write(string.format("%-8s  %d\n", left, right))
+end
+
 for language, subtotal in pairs(subtotals) do
     total = total + subtotal
     print(language, subtotal)

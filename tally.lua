@@ -33,20 +33,50 @@ local function firstline(filename)
 end
 
 local extensions = {
+    asm = "Assembly",
+    awk = "AWK",
+    bash = "Shell",
     c = "C",
+    css = "CSS",
+    haskell = "Haskell",
+    html = "HTML",
+    js = "JavaScript",
+    l = "Lex",
     lua = "Lua",
+    perl = "Perl",
+    pl = "Perl",
+    pm = "Perl",
+    py = "Python",
     rb = "Ruby",
+    s = "Assembly",
+    sed = "SED",
+    sh = "Shell",
+    sql = "SQL",
+    tcl = "TCL",
+    y = "Yacc",
 }
 
 local hashbangs = {
-    Lua = "^#!.*/lua",
     AWK = "^#!.*/awk",
+    Lua = "^#!.*/lua",
+    Perl = "^#!.*/perl",
+    Python = "^#!.*/python",
+    Ruby = "^#!.*/ruby",
     SED = "^#!.*/sed",
-    Shell = "^#!.*/.?.?sh",
+    Shell = "^#!.*/b?[ackz]sh",
+    TCL = "^#!.*/tcl",
 }
 
 local comments = {
-    Lua = "%-%-"
+    AWK = "#",
+    JavaScript = "//",
+    Lua = "%-%-",
+    Perl = "#",
+    Python = "#",
+    Ruby = "#",
+    SED = "#",
+    Shell = "#",
+    SQL = "%-%-",
 }
 
 local function findtype(filename)

@@ -1,4 +1,4 @@
-PREFIX  = ~/.local
+PREFIX  = /usr/local
 INSTALL = install -Dpm0755
 
 install: tally.lua
@@ -7,5 +7,8 @@ install: tally.lua
 uninstall:
 	$(RM) $(DESTDIR)$(PREFIX)/bin/tally
 
+local-install:
+	@$(MAKE) --no-print-directory install PREFIX=~/.local
 
-.PHONY: install uninstall
+
+.PHONY: install uninstall local-install

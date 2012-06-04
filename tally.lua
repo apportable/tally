@@ -57,14 +57,14 @@ local extensions = {
 }
 
 local hashbangs = {
-    AWK = "^#!.*/awk",
-    Lua = "^#!.*/lua",
-    Perl = "^#!.*/perl",
-    Python = "^#!.*/python",
-    Ruby = "^#!.*/ruby",
-    SED = "^#!.*/sed",
-    Shell = "^#!.*/b?[ackz]?sh",
-    TCL = "^#!.*/tcl",
+    AWK = "awk",
+    Lua = "lua",
+    Perl = "perl",
+    Python = "python",
+    Ruby = "ruby",
+    SED = "sed",
+    Shell = "b?[ackz]?sh",
+    TCL = "tcl",
 }
 
 local comments = {
@@ -90,7 +90,7 @@ local function findtype(filename)
         local hashbang = firstline(filename)
         if hashbang and hashbang:sub(1, 2) == "#!" then
             for k, v in pairs(hashbangs) do
-                if hashbang:find(v) then
+                if hashbang:find("^#!.*/" .. v) then
                     return k
                 end
             end

@@ -6,33 +6,52 @@ IFS="
 
 declare -A SUBTOTAL
 
+ruby_count() {
+    sed '/^\s*$/d;/^\s*#.*$/d;/^=begin$/,/^=end$/d' $1 | wc -l
+}
+
 add() {
     : $((SUBTOTAL[$1] += $2))
 }
 
 count() {
     case $1 in
+        awk|perl|python|sed|shell|tcl)
+                    add $1 $(sed '/^\s*$/d;/^\s*#.*$/d' $2 | wc -l);;
         ruby)       add $1 $(ruby_count $2);;
-        awk|shell)  add $1 $(generic_count $2);;
-        c|css)      add $1 $(stripcmt $2 | basic_count);;
-    esac
-}
-
-detect() {
-    case $(head -1 $1) in
-        \#!*/awk*)  count awk $1;;
-        \#!*/ruby*) count ruby $1;;
-        \#!*/??sh*) count shell $1;;
+        c|css|js)   add $1 $(stripcmt $2 | sed '/^\s*$/d' | wc -l);;
+        html)       add $1 $(sed '/^\s*$/d' $2 | wc -l);;
+        *)          echo "Error: file recognised but not counted: $1" >&2;;
     esac
 }
 
 for FILE in $(find "$PWD" -type f -not -path "$PWD/.*"); do
     case $FILE in
-        *.awk) count awk $FILE;;
-        *.rb)  count ruby $FILE;;
-        *.c)   count c $FILE;;
-        *.css) count css $FILE;;
-        *)     detect $FILE;;
+        *.awk)              count awk $FILE;;
+        *.c)                count c $FILE;;
+        *.css)              count css $FILE;;
+        *.html)             count html $FILE;;
+        *.l)                count lex $FILE;;
+        *.lua)              count lua $FILE;;
+        *.js)               count js $FILE;;
+        *.perl|*.pl|*.pm)   count perl $FILE;;
+        *.py)               count python $FILE;;
+        *.rb)               count ruby $FILE;;
+        *.sed)              count sed $FILE;;
+        *.sql)              count sql $FILE;;
+        *.tcl)              count tcl $FILE;;
+        *.y)                count yacc $FILE;;
+        *.??sh)             count shell $FILE;;
+        *) case $(head -1 $FILE) in
+            \#!*/awk*)      count awk $FILE;;
+            *html*)         count html $FILE;;
+            \#!*/lua*)      count lua $FILE;;
+            \#!*/perl*)     count perl $FILE;;
+            \#!*/python*)   count python $FILE;;
+            \#!*/ruby*)     count ruby $FILE;;
+            \#!*/sed*)      count sed $FILE;;
+            \#!*/??sh*)     count shell $FILE;;
+        esac;;
     esac
 done
 

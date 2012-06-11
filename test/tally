@@ -7,7 +7,7 @@ IFS="
 declare -A SUBTOTAL
 
 ruby_count() {
-    sed '/^\s*$/d;/^\s*#.*$/d;/^=begin$/,/^=end$/d' $1 | wc -l
+    sed -r '/^\s*(#|$)/d;/^=begin$/,/^=end$/d' $1 | wc -l
 }
 
 add() {
@@ -17,7 +17,7 @@ add() {
 count() {
     case $1 in
         awk|perl|python|sed|shell|tcl)
-                    add $1 $(sed '/^\s*$/d;/^\s*#.*$/d' $2 | wc -l);;
+                    add $1 $(sed -r '/^\s*(#|$)/d' $2 | wc -l);;
         ruby)       add $1 $(ruby_count $2);;
         c|css|js)   add $1 $(stripcmt $2 | sed '/^\s*$/d' | wc -l);;
         html)       add $1 $(sed '/^\s*$/d' $2 | wc -l);;

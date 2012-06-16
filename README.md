@@ -1,7 +1,7 @@
 Tally
 =====
 
-Simple SLOC counter written in Lua.
+Simple SLOC counter
 
 
 Status
@@ -13,11 +13,7 @@ Under development. Currently only semi-accurate.
 Installation
 ------------
 
-You can either install the required [LuaFileSystem] module and then install
-Tally manually using `make install` or download a [packaged release].
-
-[LuaFileSystem]: http://keplerproject.github.com/luafilesystem/
-[packaged release]: https://github.com/craigbarnes/tally/downloads
+    make install
 
 Usage
 -----

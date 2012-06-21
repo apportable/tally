@@ -19,8 +19,15 @@ Installation
 Usage
 -----
 
-Just `cd` to the directory you want to count and use the `tally` command. It
-will recurse into all sub-directories and print a subtotal for each
+Either `cd` to the directory you want to count and use:
+
+    tally
+
+or specify a directory with:
+
+    tally /path/to/directory
+
+Tally will recurse into all sub-directories and print a subtotal for each
 recognised language and an overall total. File names starting with a dot
 character (e.g. `.git`) are ignored.
 

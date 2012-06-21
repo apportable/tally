@@ -23,7 +23,7 @@ count() {
     esac
 }
 
-for F in $(find $1 -type f -not -path "*/.*"); do
+for F in $(find $@ -type f -not -path "*/.*"); do
     case $F in
         *.awk)              count $F awk;;
         *.c|*.h)            count $F c;;

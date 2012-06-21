@@ -19,7 +19,7 @@ count() {
         let SUB[$2]+=$(sed -r '/^\s*(#|$)/d;/^=begin$/,/^=end$/d' $1 | wc -l);;
     c|css|js)   let SUB[$2]+=$(stripc $1 | wc -l);;
     sql|lua)    let SUB[$2]+=$(sed -r '/^\s*(\-\-|$)/d' $1 | wc -l);;
-    html)       let SUB[$2]+=$(striphtml $1 | wc -l);;
+    html|xml)   let SUB[$2]+=$(striphtml $1 | wc -l);;
     esac
 }
 
@@ -37,11 +37,13 @@ for F in $(find . -type f -not -path "*/.*"); do
         *.sed)              count $F sed;;
         *.sql)              count $F sql;;
         *.tcl)              count $F tcl;;
+        *.xml)              count $F xml;;
         *.??sh)             count $F shell;;
         *[Mm]akefile)       count $F make;;
         *) case $(head -1 $F) in
             \#!*/awk*)      count $F awk;;
             *html*)         count $F html;;
+            *xml*)          count $F xml;;
             \#!*/lua*)      count $F lua;;
             \#!*/perl*)     count $F perl;;
             \#!*/python*)   count $F python;;

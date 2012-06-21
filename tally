@@ -12,51 +12,49 @@ striphtml() {
 }
 
 count() {
-    case $1 in
+    case $2 in
     awk|make|perl|python|sed|shell|tcl)
-        let SUB[$1]+=$(sed -r '/^\s*(#|$)/d' $2 | wc -l)
-    ;;
+        let SUB[$2]+=$(sed -r '/^\s*(#|$)/d' $1 | wc -l);;
     ruby)
-        let SUB[$1]+=$(sed -r '/^\s*(#|$)/d;/^=begin$/,/^=end$/d' $2 | wc -l)
-    ;;
-    c|css|js)   let SUB[$1]+=$(stripc $2 | wc -l);;
-    sql|lua)    let SUB[$1]+=$(sed -r '/^\s*(\-\-|$)/d' $2 | wc -l);;
-    html)       let SUB[$1]+=$(striphtml $2 | wc -l);;
+        let SUB[$2]+=$(sed -r '/^\s*(#|$)/d;/^=begin$/,/^=end$/d' $1 | wc -l);;
+    c|css|js)   let SUB[$2]+=$(stripc $1 | wc -l);;
+    sql|lua)    let SUB[$2]+=$(sed -r '/^\s*(\-\-|$)/d' $1 | wc -l);;
+    html)       let SUB[$2]+=$(striphtml $1 | wc -l);;
     esac
 }
 
-for FILE in $(find "$PWD" -type f -not -path "$PWD/.*"); do
-    case $FILE in
-        *.awk)              count awk $FILE;;
-        *.c|*.h)            count c $FILE;;
-        *.css)              count css $FILE;;
-        *.html)             count html $FILE;;
-        *.lua)              count lua $FILE;;
-        *.js)               count js $FILE;;
-        *.perl|*.pl|*.pm)   count perl $FILE;;
-        *.py)               count python $FILE;;
-        *.rb)               count ruby $FILE;;
-        *.sed)              count sed $FILE;;
-        *.sql)              count sql $FILE;;
-        *.tcl)              count tcl $FILE;;
-        *.??sh)             count shell $FILE;;
-        *[Mm]akefile)       count make $FILE;;
-        *) case $(head -1 $FILE) in
-            \#!*/awk*)      count awk $FILE;;
-            *html*)         count html $FILE;;
-            \#!*/lua*)      count lua $FILE;;
-            \#!*/perl*)     count perl $FILE;;
-            \#!*/python*)   count python $FILE;;
-            \#!*/ruby*)     count ruby $FILE;;
-            \#!*/sed*)      count sed $FILE;;
-            \#!*/??sh*)     count shell $FILE;;
+for F in $(find . -type f -not -path "*/.*"); do
+    case $F in
+        *.awk)              count $F awk;;
+        *.c|*.h)            count $F c;;
+        *.css)              count $F css;;
+        *.html)             count $F html;;
+        *.lua)              count $F lua;;
+        *.js)               count $F js;;
+        *.perl|*.pl|*.pm)   count $F perl;;
+        *.py)               count $F python;;
+        *.rb)               count $F ruby;;
+        *.sed)              count $F sed;;
+        *.sql)              count $F sql;;
+        *.tcl)              count $F tcl;;
+        *.??sh)             count $F shell;;
+        *[Mm]akefile)       count $F make;;
+        *) case $(head -1 $F) in
+            \#!*/awk*)      count $F awk;;
+            *html*)         count $F html;;
+            \#!*/lua*)      count $F lua;;
+            \#!*/perl*)     count $F perl;;
+            \#!*/python*)   count $F python;;
+            \#!*/ruby*)     count $F ruby;;
+            \#!*/sed*)      count $F sed;;
+            \#!*/??sh*)     count $F shell;;
         esac;;
     esac
 done
 
 for LANGUAGE in ${!SUB[@]}; do
     printf "%-8s %d\n" $LANGUAGE: ${SUB[$LANGUAGE]}
-    : $((TOTAL += ${SUB[$LANGUAGE]}))
+    let TOTAL+=${SUB[$LANGUAGE]}
 done
 
 printf "%-8s %d\n" total: $TOTAL

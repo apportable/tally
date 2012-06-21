@@ -22,7 +22,6 @@ count() {
     c|css|js)   let SUB[$1]+=$(stripc $2 | wc -l);;
     sql|lua)    let SUB[$1]+=$(sed -r '/^\s*(\-\-|$)/d' $2 | wc -l);;
     html)       let SUB[$1]+=$(striphtml $2 | wc -l);;
-    *)          echo "File recognised but not counted: $2" >&2;;
     esac
 }
 
@@ -32,7 +31,6 @@ for FILE in $(find "$PWD" -type f -not -path "$PWD/.*"); do
         *.c|*.h)            count c $FILE;;
         *.css)              count css $FILE;;
         *.html)             count html $FILE;;
-        *.l)                count lex $FILE;;
         *.lua)              count lua $FILE;;
         *.js)               count js $FILE;;
         *.perl|*.pl|*.pm)   count perl $FILE;;
@@ -41,7 +39,6 @@ for FILE in $(find "$PWD" -type f -not -path "$PWD/.*"); do
         *.sed)              count sed $FILE;;
         *.sql)              count sql $FILE;;
         *.tcl)              count tcl $FILE;;
-        *.y)                count yacc $FILE;;
         *.??sh)             count shell $FILE;;
         *[Mm]akefile)       count make $FILE;;
         *) case $(head -1 $FILE) in

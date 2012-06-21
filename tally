@@ -10,6 +10,10 @@ stripc() {
     awk -vRS='*/' '{gsub(/\/\*.*/,"")}1' $1 | sed -r '/^(\s|[{}])*$/d'
 }
 
+striphtml() {
+    awk -vRS='-->' '{gsub(/<!--.*/,"")}1' $1 | sed '/^\s*$/d'
+}
+
 count() {
     case $1 in
     awk|make|perl|python|sed|shell|tcl)
@@ -20,7 +24,7 @@ count() {
     ;;
     c|css|js)   let SUB[$1]+=$(stripc $2 | wc -l);;
     sql|lua)    let SUB[$1]+=$(sed -r '/^\s*(\-\-|$)/d' $2 | wc -l);;
-    html)       let SUB[$1]+=$(sed '/^\s*$/d' $2 | wc -l);;
+    html)       let SUB[$1]+=$(striphtml $2 | wc -l);;
     *)          echo "File recognised but not counted: $2" >&2;;
     esac
 }

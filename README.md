@@ -14,7 +14,10 @@ Tally is implemented as a single, ~60 line shell script.
 Installation
 ------------
 
-    make install
+    wget https://github.com/craigbarnes/tally/downloads/tally-0.0.3.tar.gz
+    tar xzf tally-0.0.3.tar.gz
+    cd tally-0.0.3
+    sudo make install
 
 Usage
 -----

@@ -2,12 +2,11 @@ VERSION = 0.0.2
 PREFIX  = /usr/local
 BINDIR  = $(PREFIX)/bin
 
-install: tally stripcmt
-	mkdir -p $(DESTDIR)$(BINDIR)
-	install -pm0755 $^ $(DESTDIR)$(BINDIR)
+install: tally
+	install -Dpm0755 $< $(DESTDIR)$(BINDIR)/$<
 
 uninstall:
-	rm -f $(DESTDIR)$(BINDIR)/tally $(DESTDIR)$(BINDIR)/stripcmt
+	rm -f $(DESTDIR)$(BINDIR)/tally
 
 local-install:
 	@$(MAKE) --no-print-directory install PREFIX=~/.local

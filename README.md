@@ -1,14 +1,15 @@
 Tally
 =====
-
 Simple SLOC counter
 
+Description
+-----------
 
-Status
-------
+Tally is a utility for counting the total lines of source code in a project.
+It supports most popular languages and will correctly discard comments and
+display per-language subtotals.
 
-Under development. Currently only semi-accurate.
-
+Tally is implemented as a single, ~60 line shell script.
 
 Installation
 ------------
@@ -18,14 +19,10 @@ Installation
 Usage
 -----
 
-Just `cd` to the directory you want to count and use the `tally` command.
-It will recurse into all sub-directories and print a subtotal for each
-recognised language and an overall total.
-
-All totals are counted based on source lines only. Blank lines and comment
-lines are excluded. File names starting with a dot character are ignored --
-including `.`, `..`, `.git` etc.
-
+Just `cd` to the directory you want to count and use the `tally` command. It
+will recurse into all sub-directories and print a subtotal for each
+recognised language and an overall total. File names starting with a dot
+character (e.g. `.git`) are ignored.
 
 [License](http://en.wikipedia.org/wiki/ISC_license "ISC license")
 ---------

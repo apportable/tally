@@ -23,7 +23,6 @@ make install PREFIX=%{_prefix} BINDIR=%{_bindir} DESTDIR=%{buildroot}
 %files
 %doc README.md
 %{_bindir}/tally
-%{_bindir}/stripcmt
 
 
 %changelog

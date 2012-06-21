@@ -23,10 +23,10 @@ Usage
 -----
 
 Either `cd` to the directory you want to count and use the `tally` command
-or specify the directory to count using `tally /path/to/directory`.
+or specify the files and directories to count using `tally [PATH]...`.
 
-Tally will count files inside sub-directories of the specified root directory
-but will ignore any path starting with a dot character (e.g. `.git`).
+Tally will count files inside sub-directories but will ignore any path
+starting with a dot character (e.g. `.git`).
 
 [License](http://en.wikipedia.org/wiki/ISC_license "ISC license")
 ---------

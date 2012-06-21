@@ -11,20 +11,17 @@ uninstall:
 local-install:
 	@$(MAKE) --no-print-directory install PREFIX=~/.local
 
-dist: tally-$(VERSION).tar.gz
-
 rpm: dist tally.spec ~makerpm
 	cp tally-$(VERSION).tar.gz ~makerpm/rpmbuild/SOURCES
 	cp tally.spec ~makerpm/rpmbuild/SPECS
 	su -c 'cd ~/rpmbuild && rpmbuild -ba SPECS/tally.spec' makerpm
 	cp ~makerpm/rpmbuild/RPMS/noarch/tally-$(VERSION)-*.noarch.rpm .
 
-%.tar.gz: tally stripcmt Makefile README.md
-	rm -rf $* $@
-	mkdir $*
-	cp $^ $*
-	tar -czf $@ $*
-	rm -rf $*
+dist:
+	mkdir -p tally-$(VERSION)
+	cp tally Makefile README.md tally-$(VERSION)
+	tar -czf tally-$(VERSION).tar.gz tally-$(VERSION)
+	rm -rf tally-$(VERSION)
 
 clean:
 	rm -f *.tar.gz *.rpm

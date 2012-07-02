@@ -7,7 +7,7 @@ stripc() {
     awk -vRS='*/' '{gsub(/\/\*.*/,"")}1' $1 | sed -r '/^(\s|[{}])*$/d'
 }
 
-striphtml() {
+stripxml() {
     awk -vRS='-->' '{gsub(/<!--.*/,"")}1' $1 | sed '/^\s*$/d'
 }
 
@@ -17,9 +17,12 @@ count() {
         let SUB[$2]+=$(sed -r '/^\s*(#|$)/d' $1 | wc -l);;
     ruby)
         let SUB[$2]+=$(sed -r '/^\s*(#|$)/d;/^=begin$/,/^=end$/d' $1 | wc -l);;
-    c|css|js|vala)  let SUB[$2]+=$(stripc $1 | wc -l);;
-    sql|lua)        let SUB[$2]+=$(sed -r '/^\s*(\-\-|$)/d' $1 | wc -l);;
-    html|xml)       let SUB[$2]+=$(striphtml $1 | wc -l);;
+    c|css|js|vala)
+        let SUB[$2]+=$(stripc $1 | wc -l);;
+    sql|lua)
+        let SUB[$2]+=$(sed -r '/^\s*(\-\-|$)/d' $1 | wc -l);;
+    html|mallard|xml)
+        let SUB[$2]+=$(stripxml $1 | wc -l);;
     esac
 }
 
@@ -30,6 +33,7 @@ for F in $(find $@ -type f -not -path "*/.*"); do
         *.css)              count $F css;;
         *.html)             count $F html;;
         *.lua)              count $F lua;;
+        *.page)             count $F mallard;;
         *.js)               count $F js;;
         *.perl|*.pl|*.pm)   count $F perl;;
         *.py)               count $F python;;
@@ -39,7 +43,7 @@ for F in $(find $@ -type f -not -path "*/.*"); do
         *.svg)              ;; # Don't count SVG images in XML subtotal
         *.tcl)              count $F tcl;;
         *.vala)             count $F vala;;
-        *.xml)              count $F xml;;
+        *.xml|*.ui|*.glade) count $F xml;;
         *.??sh)             count $F shell;;
         *[Mm]akefile|*.mk)  count $F make;;
         *) case "$(sed -rn '1s|(\#!.*/(env\s*)?)?(.*)|\3|p' $F)" in
@@ -50,6 +54,7 @@ for F in $(find $@ -type f -not -path "*/.*"); do
             ruby*)          count $F ruby;;
             sed*)           count $F sed;;
             *html*)         count $F html;;
+            *mallard*)      count $F mallard;;
             *xml*)          count $F xml;;
             ??sh*)          count $F shell;;
         esac;;

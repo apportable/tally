@@ -9,10 +9,17 @@ Tally is a utility for counting the total lines of source code in a project.
 It supports most popular languages and will correctly exclude comments and
 display a subtotal for each language.
 
-Tally is implemented as a single, ~60 line shell script.
+Tally is implemented as a single, ~60 line shell script
+(because SLOC count matters).
 
 Installation
 ------------
+
+    git clone git://github.com/craigbarnes/tally.git
+    cd tally
+    sudo make install
+
+or
 
     wget https://raw.github.com/craigbarnes/tally/master/tally
     sudo install -Dpm0755 tally /usr/local/bin/tally

@@ -67,7 +67,7 @@ for F in $(find $@ -type f -not -path "*/.*"); do
     esac
 done
 
-if test ${#SUB[@]} -eq 0; then echo "Nothing to count"; exit; fi
+if test ${#SUB[@]} -eq 0; then echo "Nothing to count" >&2; exit; fi
 
 echo
 echo '  +---------------+----------+'

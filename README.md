@@ -47,11 +47,14 @@ or
 Usage
 -----
 
-Either `cd` to the directory you want to count and use the `tally` command
-or specify the files and/or directories to count using `tally [PATH]...`.
+Change to the directory you want to count and simply use the `tally`
+command. By default, Tally will include every file in every subdirectory
+below the current working directory. You can change this by specifying files
+and/or directories as arguments on the command-line, for example:
 
-Tally will count files inside sub-directories but will ignore any path
-starting with a dot character (e.g. `.git`).
+    tally dir1/ file1.c file2.py
+
+Paths starting with a dot character (e.g. `.git`) are always excluded.
 
 Note: No output is displayed until all scanning and counting is complete, so
 it may seem a little unresponsive in large project directories.

@@ -15,6 +15,7 @@ Supported Languages
 
 * AWK
 * C
+* CoffeeScript
 * CSS
 * HTML
 * Lua

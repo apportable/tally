@@ -13,7 +13,7 @@ stripxml() {
 
 count() {
     case $2 in
-    awk|make|perl|python|sed|shell|tcl)
+    awk|coffee|make|perl|python|sed|shell|tcl)
         let SUB[$2]+=$(sed -r '/^\s*(#|$)/d' $1 | wc -l);;
     ruby)
         let SUB[$2]+=$(sed -r '/^\s*(#|$)/d;/^=begin$/,/^=end$/d' $1 | wc -l);;
@@ -30,6 +30,7 @@ for F in $(find $@ -type f -not -path "*/.*"); do
     case $F in
         *.awk)              count $F awk;;
         *.c|*.h)            count $F c;;
+        *.coffee)           count $F coffee;;
         *.css)              count $F css;;
         *.html)             count $F html;;
         *.lua)              count $F lua;;
@@ -48,6 +49,7 @@ for F in $(find $@ -type f -not -path "*/.*"); do
         *[Mm]akefile|*.mk)  count $F make;;
         *) case "$(sed -rn '1s|(\#!.*/(env\s*)?)?(.*)|\3|p' $F)" in
             awk*)           count $F awk;;
+            coffee*)        count $F coffee;;
             lua*)           count $F lua;;
             perl*)          count $F perl;;
             python*)        count $F python;;

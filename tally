@@ -12,7 +12,7 @@ stripxml() {
 }
 
 print() {
-    printf "%-8s %'8d\n" $*
+    printf "  | %-13s | %'8d |\n" $*
 }
 
 count() {
@@ -67,9 +67,19 @@ for F in $(find $@ -type f -not -path "*/.*"); do
     esac
 done
 
+if test ${#SUB[@]} -eq 0; then echo "Nothing to count"; exit; fi
+
+echo
+echo '  +---------------+----------+'
+echo '  | Language      |    Lines |'
+echo '  +---------------+----------+'
+
 for LANGUAGE in ${!SUB[@]}; do
     print $LANGUAGE: ${SUB[$LANGUAGE]}
     let TOTAL+=${SUB[$LANGUAGE]}
 done
 
-print total: $TOTAL
+echo '  +---------------+----------+'
+print     Total:            $TOTAL
+echo '  +---------------+----------+'
+echo

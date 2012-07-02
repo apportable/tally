@@ -40,17 +40,19 @@ for F in $(find $@ -type f -not -path "*/.*"); do
         *.vala)             count $F vala;;
         *.xml)              count $F xml;;
         *.??sh)             count $F shell;;
-        *[Mm]akefile)       count $F make;;
-        *) case $(head -1 $F) in
-            \#!*/awk*)      count $F awk;;
-            *html*)         count $F html;;
-            *xml*)          count $F xml;;
-            \#!*/lua*)      count $F lua;;
-            \#!*/perl*)     count $F perl;;
-            \#!*/python*)   count $F python;;
-            \#!*/ruby*)     count $F ruby;;
-            \#!*/sed*)      count $F sed;;
-            \#!*/??sh*)     count $F shell;;
+        *[Mm]akefile|*.mk)  count $F make;;
+        *) case "$(sed -rn '1s|\#!.*/(env\s*)?||p' $F)" in
+            awk*)           count $F awk;;
+            lua*)           count $F lua;;
+            perl*)          count $F perl;;
+            python*)        count $F python;;
+            ruby*)          count $F ruby;;
+            sed*)           count $F sed;;
+            ??sh*)          count $F shell;;
+            *) case "$(head -1 $F)" in
+                *html*)     count $F html;;
+                *xml*)      count $F xml;;
+            esac;;
         esac;;
     esac
 done

@@ -36,6 +36,7 @@ for F in $(find $@ -type f -not -path "*/.*"); do
         *.rb)               count $F ruby;;
         *.sed)              count $F sed;;
         *.sql)              count $F sql;;
+        *.svg)              ;; # Don't count SVG images in XML subtotal
         *.tcl)              count $F tcl;;
         *.vala)             count $F vala;;
         *.xml)              count $F xml;;

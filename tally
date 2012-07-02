@@ -67,19 +67,27 @@ for F in $(find $@ -type f -not -path "*/.*"); do
     esac
 done
 
+# Exit if nothing was counted
 if test ${#SUB[@]} -eq 0; then echo "Nothing to count" >&2; exit; fi
 
+# Print table header
 echo
 echo '  +---------------+----------+'
 echo '  | Language      |    Lines |'
 echo '  +---------------+----------+'
 
+# Iterate over subtotals and print table row for each counted language
 for LANGUAGE in ${!SUB[@]}; do
     print $LANGUAGE: ${SUB[$LANGUAGE]}
     let TOTAL+=${SUB[$LANGUAGE]}
 done
 
-echo '  +---------------+----------+'
-print     Total:            $TOTAL
+# Show composite total if more than one language was counted
+if test ${#SUB[@]} -gt 1; then
+    echo '  +---------------+----------+'
+    print Total: $TOTAL
+fi
+
+# Print table footer
 echo '  +---------------+----------+'
 echo

@@ -11,6 +11,10 @@ stripxml() {
     awk -vRS='-->' '{gsub(/<!--.*/,"")}1' $1 | sed '/^\s*$/d'
 }
 
+print() {
+    printf "%-8s %'8d\n" $*
+}
+
 count() {
     case $2 in
     awk|coffee|make|perl|python|sed|shell|tcl)
@@ -64,8 +68,8 @@ for F in $(find $@ -type f -not -path "*/.*"); do
 done
 
 for LANGUAGE in ${!SUB[@]}; do
-    printf "%-8s %d\n" $LANGUAGE: ${SUB[$LANGUAGE]}
+    print $LANGUAGE: ${SUB[$LANGUAGE]}
     let TOTAL+=${SUB[$LANGUAGE]}
 done
 
-printf "%-8s %d\n" total: $TOTAL
+print total: $TOTAL

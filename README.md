@@ -52,6 +52,9 @@ or specify the files and/or directories to count using `tally [PATH]...`.
 Tally will count files inside sub-directories but will ignore any path
 starting with a dot character (e.g. `.git`).
 
+Note: No output is displayed until all scanning and counting is complete, so
+it may seem a little unresponsive in large project directories.
+
 [License](http://en.wikipedia.org/wiki/ISC_license "ISC license")
 ---------
 

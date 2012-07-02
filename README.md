@@ -57,7 +57,8 @@ and/or directories as arguments on the command-line, for example:
 Paths starting with a dot character (e.g. `.git`) are always excluded.
 
 Note: No output is displayed until all scanning and counting is complete, so
-it may seem a little unresponsive in large project directories.
+it may seem unresponsive for a few seconds, depending on the size and number
+of files to be scanned.
 
 [License](http://en.wikipedia.org/wiki/ISC_license "ISC license")
 ---------

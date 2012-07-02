@@ -19,6 +19,7 @@ Supported Languages
 * HTML
 * Lua
 * Make
+* Mallard
 * JavaScript
 * Perl
 * Python

@@ -28,7 +28,7 @@ count() {
 
 subtotals() {
     for LANG in ${!SUB[@]}; do
-        printf "  │ %-13s │ %'8d │\n" $LANG: ${SUB[$LANG]}
+        printf " │ %-13s │ %'8d │\n" $LANG: ${SUB[$LANG]}
     done |
     sort -nrk4
 }
@@ -77,10 +77,8 @@ if test ${#SUB[@]} -eq 0; then
 fi
 
 # Print table of results
-echo
-echo "  ┌───────────────┬──────────┐"
-echo "  │ Language      │    Lines │"
-echo "  ├───────────────┼──────────┤"
-          subtotals        xxx,xxx
-echo "  └───────────────┴──────────┘"
-echo
+echo " ┌───────────────┬──────────┐"
+echo " │ Language      │    Lines │"
+echo " ├───────────────┼──────────┤"
+         subtotals         00,000
+echo " └───────────────┴──────────┘"

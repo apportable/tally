@@ -52,12 +52,14 @@ for F in $(find $@ -type f -not -path "*/.*"); do
         *.tcl)              count $F TCL;;
         *.vala)             count $F Vala;;
         *.xml|*.ui|*.glade) count $F XML;;
-        *.??sh)             count $F Shell;;
+        *.sh|*.bash)        count $F Shell;;
         *[Mm]akefile|*.mk)  count $F Make;;
-        *) case "$(sed -rn '1s|(\#!.*/(env\s*)?)?(.*)|\3|p' $F)" in
-            awk*)           count $F AWK;;
+        *) case "$(sed -rn '1s|(\#!.*/(env)?\s*)?(.*)|\3|p' $F)" in
+            awk*|gawk*)     count $F AWK;;
+            bash|sh)        count $F Shell;;
             coffee*)        count $F CoffeeScript;;
             lua*)           count $F Lua;;
+            make*|?make*)   count $F Make;;
             perl*)          count $F Perl;;
             python*)        count $F Python;;
             ruby*)          count $F Ruby;;
@@ -65,7 +67,6 @@ for F in $(find $@ -type f -not -path "*/.*"); do
             *html*)         count $F HTML;;
             *mallard*)      count $F Mallard;;
             *xml*)          count $F XML;;
-            ??sh*)          count $F Shell;;
         esac;;
     esac
 done

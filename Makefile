@@ -23,8 +23,12 @@ dist:
 	tar -czf tally-$(VERSION).tar.gz tally-$(VERSION)
 	rm -rf tally-$(VERSION)
 
+check: test/expected.txt
+	@./tally test | diff -su0 $< -
+	@printf "\e[1;32mAll tests passed\e[0m\n"
+
 clean:
 	rm -f *.tar.gz *.rpm
 
 
-.PHONY: install uninstall local-install dist rpm clean
+.PHONY: install uninstall local-install dist rpm check clean

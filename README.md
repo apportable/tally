@@ -6,7 +6,7 @@ Description
 -----------
 
 Tally is a command-line utility for counting the total lines of source code
-in a project. It is implemented as a single, ~70 line shell script, which
+in a project. It is implemented as a single, ~100 line shell script, which
 correctly excludes comments and blank lines and displays a subtotal for each
 supported language.
 
@@ -57,7 +57,8 @@ and/or directories as arguments on the command-line, for example:
 
     tally dir1/ file1.c file2.py
 
-Paths starting with a dot character (e.g. `.git`) are always excluded.
+Paths starting with a dot character (e.g. `.git`) are excluded, unless
+specifically added.
 
 Note: No output is displayed until all scanning and counting is complete, so
 it may seem unresponsive for a few seconds, depending on the size and number

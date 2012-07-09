@@ -21,7 +21,9 @@ Supported Languages
 * Lua
 * Make
 * Mallard
+* Markdown
 * JavaScript
+* JSON
 * Perl
 * Python
 * Ruby
@@ -31,6 +33,7 @@ Supported Languages
 * TCL
 * Vala
 * XML
+* YAML
 
 Installation
 ------------

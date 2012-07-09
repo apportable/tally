@@ -59,6 +59,7 @@ for F in $(find $@ -type f -not -path "*/.*"); do
         *.xml|*.ui|*.glade) count $F XML;;
         *.sh|*.bash)        count $F Shell;;
         *[Mm]akefile|*.mk)  count $F Make;;
+        # If no filename pattern matches, try to match hashbang:
         *) case "$(sed -rn '1s|(\#!.*/(env)?\s*)?(.*)|\3|p' $F)" in
             awk*|gawk*)     count $F AWK;;
             bash|sh)        count $F Shell;;

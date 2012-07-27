@@ -1,6 +1,7 @@
 VERSION = 0.0.3
 PREFIX  = /usr/local
 BINDIR  = $(PREFIX)/bin
+SCRIPT  = tally.sh
 
 help:
 	@echo "Usage:"
@@ -10,8 +11,8 @@ help:
 	@echo "   make check             Run tests"
 	@echo "   make clean             Remove generated files"
 
-install: tally
-	install -Dpm0755 $< $(DESTDIR)$(BINDIR)/$<
+install:
+	install -Dpm0755 $(SCRIPT) $(DESTDIR)$(BINDIR)/tally
 
 uninstall:
 	rm -f $(DESTDIR)$(BINDIR)/tally
@@ -21,12 +22,12 @@ local-install:
 
 dist:
 	mkdir -p tally-$(VERSION)
-	cp tally Makefile README.md tally-$(VERSION)
+	cp -r tally.sh tally.lua Makefile README.md test/ tally-$(VERSION)
 	tar -czf tally-$(VERSION).tar.gz tally-$(VERSION)
 	rm -rf tally-$(VERSION)
 
 check: test/expected.txt
-	@./tally test | diff -su0 $< -
+	@./$(SCRIPT) test | diff -su0 $< -
 	@printf "\e[1;32mAll tests passed\e[0m\n"
 
 clean:

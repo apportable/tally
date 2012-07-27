@@ -39,23 +39,34 @@ local extensions = {
     awk = "AWK",
     bash = "Shell",
     c = "C",
+    coffee = "CoffeeScript",
     css = "CSS",
     hs = "Haskell",
     html = "HTML",
     js = "JavaScript",
+    json = "JSON",
     l = "Lex",
     lua = "Lua",
+    markdown = "Markdown",
+    md = "Markdown",
+    mkd = "Markdown",
+    mkdn = "Markdown",
+    page = "Mallard",
     perl = "Perl",
     pl = "Perl",
     pm = "Perl",
     py = "Python",
     rb = "Ruby",
-    s = "Assembly",
+    S = "Assembly",
     sed = "SED",
     sh = "Shell",
     sql = "SQL",
     tcl = "TCL",
+    vala = "Vala",
     y = "Yacc",
+    yaml = "YAML",
+    yml = "YAML",
+    xml = "XML",
 }
 
 local hashbangs = {
@@ -71,7 +82,9 @@ local hashbangs = {
 
 local comments = {
     AWK = "#",
+    CoffeeScript = "#",
     JavaScript = "//",
+    Haskell = "%-%-",
     Lua = "%-%-",
     Make = "#",
     Perl = "#",
@@ -80,12 +93,15 @@ local comments = {
     SED = "#",
     Shell = "#",
     SQL = "%-%-",
+    TCL = "#",
+    Vala = "//",
+    YAML = "#",
 }
 
 local function findtype(filename)
     local ext = filename:match("^.*%.(.*)$")
-    if ext and extensions[ext:lower()] then
-        return extensions[ext:lower()]
+    if ext and extensions[ext] then
+        return extensions[ext]
     elseif filename:match("^.*[Mm]akefile$") then
         return "Make"
     else

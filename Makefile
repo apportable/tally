@@ -30,8 +30,14 @@ check: test/expected.txt
 	@./$(SCRIPT) test | diff -su0 $< -
 	@printf "\e[1;32mAll tests passed\e[0m\n"
 
+benchmark:
+	@echo -n 'tally.lua: '
+	@time -f '%es' ./tally.lua >/dev/null
+	@echo -n 'tally.sh:  '
+	@time -f '%es' ./tally.sh >/dev/null
+
 clean:
 	rm -f *.tar.gz
 
 
-.PHONY: help install uninstall local-install dist check clean
+.PHONY: help install uninstall local-install dist check benchmark clean

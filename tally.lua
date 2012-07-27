@@ -4,7 +4,7 @@
 
 local lfs = require "lfs"
 local subtotals = {}
-local total = 0
+local sorted = {}
 
 local function dirtree(dir)
     assert(dir and dir ~= "", "directory parameter is missing or empty")
@@ -144,8 +144,13 @@ local function print(left, right)
 end
 
 for language, subtotal in pairs(subtotals) do
-    total = total + subtotal
-    print(language, subtotal)
+    table.insert(sorted, {language=language, subtotal=subtotal})
 end
 
-print("Total", total)
+table.sort(sorted, function(a, b)
+    return a.subtotal > b.subtotal
+end)
+
+for i, v in ipairs(sorted) do
+    print(v.language, v.subtotal)
+end

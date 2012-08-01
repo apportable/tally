@@ -58,6 +58,7 @@ local extensions = {
     lua = "Lua",
     markdown = "Markdown",
     md = "Markdown",
+    mk = "Make",
     mkd = "Markdown",
     mkdn = "Markdown",
     o = false,
@@ -94,6 +95,7 @@ local extensions = {
 local hashbangs = {
     AWK = "awk",
     Lua = "lua",
+    Make = "make",
     Perl = "perl",
     Python = "python",
     Ruby = "ruby",
@@ -149,7 +151,7 @@ local function countlines(filename, comment)
     return count
 end
 
-for filename in dirtree(os.getenv("PWD")) do
+for filename in dirtree(... or ".") do
     local filetype = findtype(filename)
     if filetype then
         local c = comments[filetype]

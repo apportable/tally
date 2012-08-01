@@ -1,6 +1,6 @@
 #!/usr/bin/lua
 -- Copyright 2012, Craig Barnes
--- Licensed under the Internet Systems Consortium (ISC) license
+-- Licensed under the ISC license
 
 local lfs = require "lfs"
 local subtotals = {}

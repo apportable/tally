@@ -1,6 +1,6 @@
 #!/bin/bash
 # Copyright 2012, Craig Barnes
-# Licensed under the Internet Systems Consortium (ISC) license
+# Licensed under the ISC license
 
 IFS=$'\n'       # Prevent loops splitting filenames on whitespace
 declare -A SUB  # Initialise associative array to store subtotals

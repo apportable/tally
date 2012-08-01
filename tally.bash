@@ -38,27 +38,28 @@ subtotals() {
 
 for F in $(find $@ -type f -not -path "*/.*"); do
     case $F in
+        *.a|*.gif|*.gz|*.jpg|*.jpeg|*.o|*.obj|*.out|*.png|*.rpm|*.so| \
+        *.svg|*.svgz|*.tar|*.tgz|*.xz|*.zip|*.[123456789]) ;;
         *.awk)              count $F AWK;;
         *.c|*.h)            count $F C;;
         *.coffee)           count $F CoffeeScript;;
         *.css)              count $F CSS;;
         *.html)             count $F HTML;;
+        *.js)               count $F JavaScript;;
+        *.json)             count $F JSON;;
         *.lua)              count $F Lua;;
         *.md|*.mkd|*.mkdn)  count $F Markdown;;
         *.page)             count $F Mallard;;
-        *.js)               count $F JavaScript;;
-        *.json)             count $F JSON;;
         *.perl|*.pl|*.pm)   count $F Perl;;
         *.py)               count $F Python;;
         *.rb)               count $F Ruby;;
         *.sed)              count $F Sed;;
+        *.sh|*.bash)        count $F Shell;;
         *.sql)              count $F SQL;;
-        *.svg)              ;; # Don't count SVG images in XML subtotal
         *.tcl)              count $F TCL;;
         *.vala)             count $F Vala;;
         *.yaml|*.yml)       count $F YAML;;
         *.xml|*.ui|*.glade) count $F XML;;
-        *.sh|*.bash)        count $F Shell;;
         *[Mm]akefile|*.mk)  count $F Make;;
         # If no filename pattern matches, try to match hashbang:
         *) case "$(sed -rn '1s|(\#!.*/(env)?\s*)?(.*)|\3|p' $F)" in

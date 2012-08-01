@@ -35,14 +35,23 @@ local function firstline(filename)
 end
 
 local extensions = {
+    a = false,
     asm = "Assembly",
     awk = "AWK",
     bash = "Shell",
+    bin = false,
     c = "C",
     coffee = "CoffeeScript",
     css = "CSS",
+    dll = false,
+    exe = false,
+    gif = false,
+    gz = false,
     hs = "Haskell",
+    htm = "HTML",
     html = "HTML",
+    jpeg = false,
+    jpg = false,
     js = "JavaScript",
     json = "JSON",
     l = "Lex",
@@ -51,22 +60,35 @@ local extensions = {
     md = "Markdown",
     mkd = "Markdown",
     mkdn = "Markdown",
+    o = false,
+    obj = false,
+    out = false,
     page = "Mallard",
     perl = "Perl",
     pl = "Perl",
     pm = "Perl",
+    png = false,
     py = "Python",
     rb = "Ruby",
+    rpm = false,
     S = "Assembly",
     sed = "SED",
     sh = "Shell",
+    so = false,
     sql = "SQL",
+    svg = false,
+    svgz = false,
+    tar = false,
     tcl = "TCL",
+    tgz = false,
+    txt = false,
     vala = "Vala",
     y = "Yacc",
     yaml = "YAML",
     yml = "YAML",
     xml = "XML",
+    xz = false,
+    zip = false,
 }
 
 local hashbangs = {
@@ -100,7 +122,7 @@ local comments = {
 
 local function findtype(filename)
     local ext = filename:match("^.*%.(.*)$")
-    if ext and extensions[ext] then
+    if ext and extensions[ext] ~= nil then
         return extensions[ext]
     elseif filename:match("^.*[Mm]akefile$") then
         return "Make"
@@ -147,9 +169,7 @@ for language, subtotal in pairs(subtotals) do
     table.insert(sorted, {language=language, subtotal=subtotal})
 end
 
-table.sort(sorted, function(a, b)
-    return a.subtotal > b.subtotal
-end)
+table.sort(sorted, function(a, b) return a.subtotal > b.subtotal end)
 
 for i, v in ipairs(sorted) do
     print(v.language, v.subtotal)

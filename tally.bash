@@ -27,6 +27,8 @@ count() {
         let SUB[$2]+=$(stripxml $1 | wc -l);;
     JSON|Markdown)
         let SUB[$2]+=$(sed '/^\s*$/d' $1 | wc -l);;
+    Scheme)
+        let SUB[$2]+=$(sed -r '/^\s*($|;)/d' $1 | wc -l);;
     esac
 }
 
@@ -53,6 +55,7 @@ for F in $(find $@ -type f -not -path "*/.*"); do
         *.perl|*.pl|*.pm)   count $F Perl;;
         *.py)               count $F Python;;
         *.rb)               count $F Ruby;;
+        *.scm)              count $F Scheme;;
         *.sed)              count $F Sed;;
         *.sh|*.bash)        count $F Shell;;
         *.sql)              count $F SQL;;

@@ -136,10 +136,6 @@ for filename in dirtree(... or ".") do
     end
 end
 
-local function print(left, right)
-    io.write(string.format("%-10s %4d\n", left, right))
-end
-
 for language, subtotal in pairs(subtotals) do
     table.insert(sorted, {language=language, subtotal=subtotal})
 end
@@ -147,5 +143,5 @@ end
 table.sort(sorted, function(a, b) return a.subtotal > b.subtotal end)
 
 for i, v in ipairs(sorted) do
-    print(v.language, v.subtotal)
+    io.write(string.format("%-10s %4d\n", v.language, v.subtotal))
 end

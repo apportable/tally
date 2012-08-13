@@ -25,33 +25,16 @@ local function dirtree(dir)
     return coroutine.wrap(function() yieldtree(dir) end)
 end
 
-local function firstline(filename)
-    local file = io.open(filename, "r")
-    if file then
-        local hashbang = file:read()
-        file:close()
-        return hashbang
-    end
-end
-
 local extensions = {
-    a = false,
     asm = "Assembly",
     awk = "AWK",
     bash = "Shell",
-    bin = false,
     c = "C",
     coffee = "CoffeeScript",
     css = "CSS",
-    dll = false,
-    exe = false,
-    gif = false,
-    gz = false,
     hs = "Haskell",
     htm = "HTML",
     html = "HTML",
-    jpeg = false,
-    jpg = false,
     js = "JavaScript",
     json = "JSON",
     l = "Lex",
@@ -61,48 +44,36 @@ local extensions = {
     mk = "Make",
     mkd = "Markdown",
     mkdn = "Markdown",
-    o = false,
-    obj = false,
-    out = false,
     page = "Mallard",
     perl = "Perl",
     pl = "Perl",
     pm = "Perl",
-    png = false,
     py = "Python",
     rb = "Ruby",
-    rpm = false,
     S = "Assembly",
     scm = "Scheme",
     sed = "SED",
     sh = "Shell",
-    so = false,
     sql = "SQL",
-    svg = false,
-    svgz = false,
-    tar = false,
     tcl = "TCL",
-    tgz = false,
-    txt = false,
     vala = "Vala",
     y = "Yacc",
     yaml = "YAML",
     yml = "YAML",
     xml = "XML",
-    xz = false,
-    zip = false,
 }
 
 local hashbangs = {
-    AWK = "awk",
-    Lua = "lua",
-    Make = "make",
-    Perl = "perl",
-    Python = "python",
-    Ruby = "ruby",
-    SED = "sed",
-    Shell = "b?[ackz]?sh",
-    TCL = "tcl",
+    awk = "AWK",
+    bash = "Shell",
+    lua = "Lua",
+    make = "Make",
+    perl = "Perl",
+    python = "Python",
+    ruby = "Ruby",
+    sed = "SED",
+    sh = "Shell",
+    tcl = "TCL",
 }
 
 local comments = {
@@ -125,18 +96,18 @@ local comments = {
 }
 
 local function findtype(filename)
-    local ext = filename:match("^.*%.(.*)$")
-    if ext and extensions[ext] ~= nil then
+    local ext = filename:match "%.(%w*)$"
+    if ext then
         return extensions[ext]
-    elseif filename:match("^.*[Mm]akefile$") then
+    elseif filename:match "[Mm]akefile$" then
         return "Make"
     else
-        local hashbang = firstline(filename)
-        if hashbang and hashbang:sub(1, 2) == "#!" then
-            for k, v in pairs(hashbangs) do
-                if hashbang:find("^#!.*/" .. v) then
-                    return k
-                end
+        local file = io.open(filename, "r")
+        if file then
+            local firstline = file:read()
+            file:close()
+            if type(firstline) == "string" then
+                return hashbangs[firstline:match "^#!.*/(.*)"]
             end
         end
     end

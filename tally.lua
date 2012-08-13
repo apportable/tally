@@ -3,27 +3,7 @@
 -- Licensed under the ISC license
 
 local lfs = require "lfs"
-local subtotals = {}
-local sorted = {}
-
-local function dirtree(dir)
-    assert(dir and dir ~= "", "directory parameter is missing or empty")
-    if dir:sub(-1) == "/" then dir = dir:sub(1, -2) end
-    local function yieldtree(dir)
-        for entry in lfs.dir(dir) do
-            if entry:sub(1, 1) ~= "." then
-                entry = dir .. "/" .. entry
-                local attr = lfs.attributes(entry)
-                if attr.mode == "file" then
-                    coroutine.yield(entry)
-                elseif attr.mode == "directory" then
-                    yieldtree(entry)
-                end
-            end
-        end
-    end
-    return coroutine.wrap(function() yieldtree(dir) end)
-end
+local subtotals, sorted = {}, {}
 
 local extensions = {
     asm = "Assembly",
@@ -94,6 +74,25 @@ local comments = {
     Vala = "//",
     YAML = "#",
 }
+
+local function dirtree(dir)
+    assert(dir and dir ~= "", "directory parameter is missing or empty")
+    if dir:sub(-1) == "/" then dir = dir:sub(1, -2) end
+    local function yieldtree(dir)
+        for entry in lfs.dir(dir) do
+            if entry:sub(1, 1) ~= "." then
+                entry = dir .. "/" .. entry
+                local attr = lfs.attributes(entry)
+                if attr.mode == "file" then
+                    coroutine.yield(entry)
+                elseif attr.mode == "directory" then
+                    yieldtree(entry)
+                end
+            end
+        end
+    end
+    return coroutine.wrap(function() yieldtree(dir) end)
+end
 
 local function findtype(filename)
     local ext = filename:match "%.(%w*)$"

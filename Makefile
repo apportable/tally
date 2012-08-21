@@ -1,7 +1,7 @@
 VERSION = 0.0.3
 PREFIX  = /usr/local
 BINDIR  = $(PREFIX)/bin
-SCRIPT  = tally.bash
+TALLY   = ./tally.bash
 
 help:
 	@echo "Usage:"
@@ -12,7 +12,7 @@ help:
 	@echo "   make clean             Remove generated files"
 
 install:
-	install -Dpm0755 $(SCRIPT) $(DESTDIR)$(BINDIR)/tally
+	install -Dpm0755 $(TALLY) $(DESTDIR)$(BINDIR)/tally
 
 uninstall:
 	rm -f $(DESTDIR)$(BINDIR)/tally
@@ -27,7 +27,7 @@ dist:
 	rm -rf tally-$(VERSION)
 
 check: test/expected.txt
-	@./$(SCRIPT) test | diff -su0 $< -
+	@$(TALLY) test | diff -su0 $< -
 	@printf "\e[1;32mAll tests passed\e[0m\n"
 
 benchmark:

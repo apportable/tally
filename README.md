@@ -1,39 +1,7 @@
 Tally
 =====
-Simple SLOC counter
 
-Description
------------
-
-Tally is a command-line utility for counting the total lines of source code
-in a project. It is implemented as a single, ~100 line shell script, which
-correctly excludes comments and blank lines and displays a subtotal for each
-supported language.
-
-Supported Languages
--------------------
-
-* AWK
-* C
-* CoffeeScript
-* CSS
-* HTML
-* Lua
-* Make
-* Mallard
-* Markdown
-* JavaScript
-* JSON
-* Perl
-* Python
-* Ruby
-* Sed
-* Shell
-* SQL
-* TCL
-* Vala
-* XML
-* YAML
+Simple SLOC counter that displays a subtotal for each supported language.
 
 Installation
 ------------
@@ -41,11 +9,6 @@ Installation
     git clone git://github.com/craigbarnes/tally.git
     cd tally
     sudo make install
-
-or
-
-    wget https://raw.github.com/craigbarnes/tally/master/tally
-    sudo install -Dpm0755 tally /usr/local/bin/tally
 
 Usage
 -----

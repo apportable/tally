@@ -19,8 +19,10 @@ count() {
         let SUB[$2]+=$(sed -r '/^\s*(#|$)/d' $1 | wc -l);;
     Ruby)
         let SUB[$2]+=$(sed -r '/^\s*(#|$)/d;/^=begin$/,/^=end$/d' $1 | wc -l);;
-    C|CSS|JavaScript|Vala)
+    C|CSS)
         let SUB[$2]+=$(stripc $1 | wc -l);;
+    C++|JavaScript|Vala)
+        let SUB[$2]+=$(stripc $1 | sed '/^\s*\/\//d' | wc -l);;
     SQL|Lua)
         let SUB[$2]+=$(sed -r '/^\s*(\-\-|$)/d' $1 | wc -l);;
     HTML|Mallard|XML)
@@ -44,6 +46,7 @@ for F in $(find $@ -type f -not -path "*/.*"); do
         *.svg|*.svgz|*.tar|*.tgz|*.xz|*.zip|*.[123456789]) ;;
         *.awk)              count $F AWK;;
         *.c|*.h)            count $F C;;
+        *.cc|*.cpp|*.cxx)   count $F C++;;
         *.coffee)           count $F CoffeeScript;;
         *.css)              count $F CSS;;
         *.html)             count $F HTML;;

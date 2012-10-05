@@ -42,8 +42,7 @@ subtotals() {
 
 for F in $(find $@ -type f -not -path "*/.*"); do
     case $F in
-        *.a|*.gif|*.gz|*.jpg|*.jpeg|*.o|*.obj|*.out|*.png|*.rpm|*.so| \
-        *.svg|*.svgz|*.tar|*.tgz|*.xz|*.zip|*.[123456789]) ;;
+        *.gz|*.jpg|*.out|*.png|*.rpm|*.so|*.svg|*.zip|*.[ao123456789]) ;;
         *.awk)              count $F AWK;;
         *.c|*.h)            count $F C;;
         *.cc|*.cpp|*.cxx)   count $F C++;;

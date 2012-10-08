@@ -3,7 +3,47 @@
 -- Licensed under the ISC license
 
 local lfs = require "lfs"
+local lpeg = require "lpeg"
 local subtotals, sorted = {}, {}
+
+-- Discard C comments and count lines
+local function countc(filename)
+
+    -- TODO: doesn't yet discard single line ("//") comments, which should
+    -- be optional, e.g. for CSS
+
+    -- TODO: isn't context aware -- strings containing comment delimeters
+    -- may result in incorrect count
+
+    local file = assert(io.open(filename, "r"))
+    local text = file:read("*a")
+    file:close()
+
+    local open = lpeg.P "/*"
+    local close = lpeg.P "*/"
+    local notopen = (1 - open)^0
+    local notclose = (1 - close)^0
+    local comment = open * notclose * close
+    local notcomment = (lpeg.C(notopen) * comment)^0 * lpeg.C(notclose)
+
+    local accum = {}
+
+    lpeg.Cf(notcomment, function(a, b)
+        if a then table.insert(accum, a) end
+        if b then table.insert(accum, b) end
+    end):match(text)
+
+    local stripped = table.concat(accum)
+    local count = 0
+
+    for line in stripped:gmatch("[^\r\n]+") do
+        if not line:find("^%s*$") then
+            count = count + 1
+        end
+    end
+
+    return count
+end
 
 local extensions = {
     asm = "Assembly",
@@ -61,9 +101,11 @@ local hashbangs = {
 
 local comments = {
     AWK = "#",
+    C = countc,
+    CSS = countc,
     ["C++"] = "//",
     CoffeeScript = "#",
-    JavaScript = "//",
+    JavaScript = "//",  -- change to countc
     Haskell = "%-%-",
     Lua = "%-%-",
     Make = "#",
@@ -131,10 +173,16 @@ for filename in dirtree(... or ".") do
     local filetype = findtype(filename)
     if filetype then
         local c = comments[filetype]
-        if subtotals[filetype] then
-            subtotals[filetype] = subtotals[filetype] + countlines(filename, c)
+        local count
+        if type(c) == "function" then
+            count = c(filename)
         else
-            subtotals[filetype] = countlines(filename, c)
+            count = countlines(filename, c)
+        end
+        if subtotals[filetype] then
+            subtotals[filetype] = subtotals[filetype] + count
+        else
+            subtotals[filetype] = count
         end
     end
 end

@@ -190,12 +190,14 @@ for filename in dirtree(... or ".") do
     end
 end
 
-for language, subtotal in pairs(subtotals) do
-    table.insert(sorted, {language=language, subtotal=subtotal})
+for lang, lines in pairs(subtotals) do
+    sorted[#sorted+1] = {lang=lang, lines=lines}
 end
 
-table.sort(sorted, function(a, b) return a.subtotal > b.subtotal end)
+table.sort(sorted, function(a, b)
+    return a.lines > b.lines
+end)
 
-for i, v in ipairs(sorted) do
-    io.write(string.format("%-10s %4d\n", v.language, v.subtotal))
+for i = 1, #sorted do
+    io.write(string.format("%-10s %4d\n", sorted[i].lang, sorted[i].lines))
 end

@@ -21,7 +21,7 @@ count() {
         let SUB[$2]+=$(sed -r '/^\s*(#|$)/d;/^=begin$/,/^=end$/d' $1 | wc -l);;
     C|CSS)
         let SUB[$2]+=$(stripc $1 | wc -l);;
-    C++|JavaScript|Vala)
+    C++|Go|JavaScript|Vala)
         let SUB[$2]+=$(stripc $1 | sed '/^\s*\/\//d' | wc -l);;
     SQL|Lua)
         let SUB[$2]+=$(sed -r '/^\s*(\-\-|$)/d' $1 | wc -l);;
@@ -48,6 +48,7 @@ for F in $(find $@ -type f -not -path "*/.*"); do
         *.cc|*.cpp|*.cxx)   count $F C++;;
         *.coffee)           count $F CoffeeScript;;
         *.css)              count $F CSS;;
+        *.go)               count $F Go;;
         *.html)             count $F HTML;;
         *.js)               count $F JavaScript;;
         *.json)             count $F JSON;;

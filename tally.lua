@@ -34,10 +34,11 @@ local function countc(filename)
     end):match(text)
 
     local stripped = table.concat(accum)
-    local count = 0
+    if stripped == "" then stripped = text end
 
+    local count = 0
     for line in stripped:gmatch("[^\r\n]+") do
-        if not line:find("^%s*$") then
+        if not line:find("^%s*$") and not line:find("^%s*//") then
             count = count + 1
         end
     end
@@ -55,6 +56,7 @@ local extensions = {
     cpp = "C++",
     css = "CSS",
     cxx = "C++",
+    go = "Go",
     hs = "Haskell",
     htm = "HTML",
     html = "HTML",
@@ -105,10 +107,11 @@ local comments = {
     AWK = "#",
     C = countc,
     CSS = countc,
-    ["C++"] = "//",
+    ["C++"] = countc,
     CoffeeScript = "#",
-    JavaScript = "//",  -- change to countc
+    Go = countc,
     Haskell = "%-%-",
+    JavaScript = countc,
     Lua = "%-%-",
     Make = "#",
     Perl = "#",
@@ -120,7 +123,7 @@ local comments = {
     Shell = "#",
     SQL = "%-%-",
     TCL = "#",
-    Vala = "//",
+    Vala = countc,
     YAML = "#",
 }
 

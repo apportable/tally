@@ -67,7 +67,7 @@ local extensions = {
     perl = "Perl", pl = "Perl", pm = "Perl",
     py = "Python",
     rb = "Ruby",
-    sass = "Sass", scss = "Sass",
+    scss = "SCSS",
     scm = "Scheme",
     sed = "SED",
     sh = "Shell",

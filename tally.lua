@@ -4,8 +4,7 @@
 
 local lfs = require "lfs"
 local lpeg = require "lpeg"
-local subtotals = setmetatable({}, {__index = function() return 0 end})
-local sorted = {}
+local subtotals, sorted = {}, {}
 
 -- Discard C comments and count lines
 local function countc(filename)
@@ -175,8 +174,7 @@ for filename in dirtree(... or ".") do
         else
             count = countlines(filename, c)
         end
-        -- subtotals has __index metamethod that returns 0 (not nil) if empty
-        subtotals[filetype] = subtotals[filetype] + count
+        subtotals[filetype] = (subtotals[filetype] or 0) + count
     end
 end
 

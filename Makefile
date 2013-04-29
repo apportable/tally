@@ -6,7 +6,7 @@ TALLY   = ./tally.bash
 help:
 	@echo "Usage:"
 	@echo "   make instal            Install to PREFIX ($(PREFIX))"
-	@echo "   make local-install     Install to $(HOME)/.local"
+	@echo "   make install-home      Install to $(HOME)/.local"
 	@echo "   make dist              Create release tarball"
 	@echo "   make check             Run tests"
 	@echo "   make clean             Remove generated files"
@@ -17,7 +17,7 @@ install:
 uninstall:
 	rm -f $(DESTDIR)$(BINDIR)/tally
 
-local-install:
+install-home:
 	@$(MAKE) --no-print-directory install PREFIX=~/.local
 
 dist:
@@ -40,4 +40,4 @@ clean:
 	rm -f *.tar.gz
 
 
-.PHONY: help install uninstall local-install dist check benchmark clean
+.PHONY: help install uninstall install-home dist check benchmark clean

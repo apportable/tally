@@ -2,15 +2,18 @@
 # Copyright 2012, Craig Barnes
 # Licensed under the ISC license
 
+POSIXLY_CORRECT=1
+export POSIXLY_CORRECT
+
 IFS=$'\n'       # Prevent loops splitting filenames on whitespace
 declare -A SUB  # Initialise associative array to store subtotals
 
 stripc() {
-    awk -vRS='*/' '{gsub(/\/\*.*/,"")}1' $1 | sed -r '/^(\s|[{}])*$/d'
+    awk -v RS='\\*\\/' '{gsub(/\/\*.*/,"")}1' $1 | sed -r '/^(\s|[{}])*$/d'
 }
 
 stripxml() {
-    awk -vRS='-->' '{gsub(/<!--.*/,"")}1' $1 | sed '/^\s*$/d'
+    awk -v RS='-->' '{gsub(/<!--.*/,"")}1' $1 | sed '/^\s*$/d'
 }
 
 count() {

@@ -27,6 +27,24 @@ Note: No output is displayed until all scanning and counting is complete, so
 it may seem unresponsive for a few seconds, depending on the size and number
 of files to be scanned.
 
+tally.lua
+---------
+
+`tally.lua` is a re-implementation of Tally in Lua, intended to eventually
+replace `tally.bash`. It should be considerably faster, especially when
+dealing with a large number of files. It also relieves the massive amount of
+yak shaving involved in writing portable shell/sed/awk scripts.
+
+First, lfs and LPeg are required as dependencies. These are available on most
+Linux distros and also via luarocks.
+
+`tally.lua` can then be installed with:
+
+    sudo make install TALLY=tally.lua
+
+Usage is similar to `tally.bash`, although it can currently only accept
+directories on the command line (not individual files).
+
 [License](http://en.wikipedia.org/wiki/ISC_license "ISC license")
 ---------
 

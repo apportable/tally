@@ -1,7 +1,7 @@
 Tally
 =====
 
-Simple SLOC counter that displays a subtotal for each supported language.
+Simple SLOC counter that displays a subtotal for each [supported language][1].
 
 Installation
 ------------
@@ -68,6 +68,7 @@ OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
 CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
+[1]: https://github.com/craigbarnes/tally/blob/master/tally.bash#L49-74
 [lfs]: http://keplerproject.github.io/luafilesystem/ "LuaFileSystem"
 [LPeg]: http://www.inf.puc-rio.br/~roberto/lpeg/
 [License]: http://en.wikipedia.org/wiki/ISC_license "ISC license"

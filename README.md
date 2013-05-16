@@ -32,20 +32,25 @@ tally.lua
 
 `tally.lua` is a re-implementation of Tally in Lua, intended to eventually
 replace `tally.bash`. It should be considerably faster, especially when
-dealing with a large number of files. It also relieves the massive amount of
-yak shaving involved in writing portable shell/sed/awk scripts.
+dealing with a large number of files.
 
-First, lfs and LPeg are required as dependencies. These are available on most
-Linux distros and also via luarocks.
+##### Dependencies
 
-`tally.lua` can then be installed with:
+* [lfs]
+* [LPeg]
+
+##### Installation
 
     sudo make install TALLY=tally.lua
 
-Usage is similar to `tally.bash`, although it can currently only accept
-directories on the command line (not individual files).
+##### Usage
 
-[License](http://en.wikipedia.org/wiki/ISC_license "ISC license")
+Usage is similar to `tally.bash`, although it can currently only accept
+directories on the command line (not individual files). Totals will also
+differ slightly from `tally.bash` because one excludes lines only containing
+closing braces while the other includes them.
+
+[License]
 ---------
 
 Copyright (c) 2012, Craig Barnes
@@ -61,3 +66,8 @@ SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
 WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION
 OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
 CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+
+[lfs]: http://keplerproject.github.io/luafilesystem/ "LuaFileSystem"
+[LPeg]: http://www.inf.puc-rio.br/~roberto/lpeg/
+[License]: http://en.wikipedia.org/wiki/ISC_license "ISC license"

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright 2012, Craig Barnes
+# Copyright 2012-2013 Craig Barnes
 # Licensed under the ISC license
 
 POSIXLY_CORRECT=1

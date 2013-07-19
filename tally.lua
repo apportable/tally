@@ -148,7 +148,7 @@ local function findtype(filename)
         if file then
             local firstline = file:read()
             file:close()
-            if type(firstline) == "string" then
+            if firstline then
                 return hashbangs[firstline:match "^#!.*/(.*)"]
             end
         end

@@ -1,7 +1,7 @@
 Tally
 =====
 
-Simple SLOC counter that displays a subtotal for each [supported language][1].
+A simple SLOC counter, which displays a subtotal for each [supported language].
 
 Installation
 ------------
@@ -23,37 +23,14 @@ and/or directories as arguments on the command-line, for example:
 Paths starting with a dot character (e.g. `.git`) are excluded, unless
 specifically added.
 
-Note: No output is displayed until all scanning and counting is complete, so
-it may seem unresponsive for a few seconds, depending on the size and number
-of files to be scanned.
-
-tally.lua
----------
-
-`tally.lua` is a re-implementation of Tally in Lua, intended to eventually
-replace `tally.bash`. It should be considerably faster, especially when
-dealing with a large number of files.
-
-##### Dependencies
-
-* [lfs]
-* [LPeg]
-
-##### Installation
-
-    sudo make install TALLY=tally.lua
-
-##### Usage
-
-Usage is similar to `tally.bash`, although it can currently only accept
-directories on the command line (not individual files). Totals will also
-differ slightly from `tally.bash` because one excludes lines only containing
-closing braces while the other includes them.
+Note: no output is displayed until all scanning and counting is complete,
+which may take a few seconds, depending on the size and number of files to
+be scanned.
 
 [License]
 ---------
 
-Copyright (c) 2012-2013 Craig Barnes
+Copyright 2012-2013 Craig Barnes
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above
@@ -68,7 +45,5 @@ OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
 CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-[1]: https://github.com/craigbarnes/tally/blob/master/tally.bash#L49-74
-[lfs]: http://keplerproject.github.io/luafilesystem/ "LuaFileSystem"
-[LPeg]: http://www.inf.puc-rio.br/~roberto/lpeg/
+[supported language]: https://github.com/craigbarnes/tally/blob/master/tally.bash#L47-72
 [License]: http://en.wikipedia.org/wiki/ISC_license "ISC license"

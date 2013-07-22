@@ -12,7 +12,8 @@ help:
 	@echo "   make clean             Remove generated files"
 
 install:
-	install -Dpm0755 $(TALLY) $(DESTDIR)$(BINDIR)/tally
+	mkdir -p $(DESTDIR)$(BINDIR)
+	install -p -m 0755 $(TALLY) $(DESTDIR)$(BINDIR)/tally
 
 uninstall:
 	rm -f $(DESTDIR)$(BINDIR)/tally

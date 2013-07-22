@@ -2,11 +2,9 @@
 # Copyright 2012-2013 Craig Barnes
 # Licensed under the ISC license
 
-POSIXLY_CORRECT=1
-export POSIXLY_CORRECT
-
-IFS=$'\n'       # Prevent loops splitting filenames on whitespace
-declare -A SUB  # Initialise associative array to store subtotals
+IFS=$'\n' # Prevent filenames with whitespace from being split
+export POSIXLY_CORRECT=1
+declare -A SUB
 
 stripc() {
     awk -v RS='\\*\\/' '{gsub(/\/\*.*/,"")}1' $1 | sed -r '/^(\s|[{}])*$/d'

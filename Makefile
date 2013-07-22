@@ -5,8 +5,8 @@ TALLY   = ./tally.bash
 
 help:
 	@echo "Usage:"
-	@echo "   make install           Install to PREFIX ($(PREFIX))"
-	@echo "   make install-home      Install to $(HOME)/.local"
+	@echo "   make install           Install to $(BINDIR)"
+	@echo "   make install-home      Install to $(HOME)/.local/bin"
 	@echo "   make dist              Create release tarball"
 	@echo "   make check             Run tests"
 	@echo "   make clean             Remove generated files"

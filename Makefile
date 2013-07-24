@@ -11,15 +11,14 @@ help:
 	@echo "   make check             Run tests"
 	@echo "   make clean             Remove generated files"
 
-install:
+install-home: PREFIX = $(HOME)/.local
+
+install install-home:
 	mkdir -p $(DESTDIR)$(BINDIR)
 	install -p -m 0755 $(TALLY) $(DESTDIR)$(BINDIR)/tally
 
 uninstall:
 	rm -f $(DESTDIR)$(BINDIR)/tally
-
-install-home:
-	@$(MAKE) --no-print-directory install PREFIX=~/.local
 
 dist:
 	mkdir -p tally-$(VERSION)

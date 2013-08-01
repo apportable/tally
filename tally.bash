@@ -7,7 +7,7 @@ export POSIXLY_CORRECT=1
 declare -A SUB
 
 stripc() {
-    awk -v RS='\\*\\/' '{gsub(/\/\*.*/,"")}1' $1 | sed -r '/^(\s|[{}])*$/d'
+    awk -v RS='\\*\\/' '{gsub(/\/\*.*/,"")}1' $1 | sed '/^[:space:]*$/d'
 }
 
 stripxml() {

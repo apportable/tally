@@ -1,7 +1,7 @@
 Tally
 =====
 
-A simple SLOC counter, which displays a subtotal for each [supported language].
+A simple SLOC counter that displays a subtotal for each [supported language].
 
 Installation
 ------------

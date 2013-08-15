@@ -15,7 +15,7 @@ local function countc(filename)
     -- TODO: isn't context aware -- strings containing comment delimeters
     -- may result in incorrect count
 
-    local file = assert(io.open(filename, "r"))
+    local file = assert(io.open(filename))
     local text = file:read("*a")
     file:close()
 
@@ -144,7 +144,7 @@ local function findtype(filename)
     elseif filename:match "[Mm]akefile$" then
         return "Make"
     else
-        local file = io.open(filename, "r")
+        local file = io.open(filename)
         if file then
             local firstline = file:read()
             file:close()

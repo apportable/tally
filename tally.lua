@@ -4,7 +4,7 @@
 
 local lfs = require "lfs"
 local lpeg = require "lpeg"
-local subtotals, sorted = {}, {}
+local subtotals, sorted, files = {}, {}, {}
 
 -- Discard C comments and count lines
 local function countc(filename)
@@ -167,6 +167,12 @@ local function countlines(filename, comment)
 end
 
 for filename in dirtree(... or ".") do
+    table.insert(files, filename)
+end
+
+io.stderr:write(string.format("Scanning %d files...", #files))
+
+for i, filename in ipairs(files) do
     local filetype = findtype(filename)
     if filetype then
         local c = comments[filetype]
@@ -179,6 +185,8 @@ for filename in dirtree(... or ".") do
         subtotals[filetype] = (subtotals[filetype] or 0) + count
     end
 end
+
+io.stderr:write "\27[2K\r" -- Erase current line and reset cursor
 
 for lang, lines in pairs(subtotals) do
     sorted[#sorted+1] = {lang=lang, lines=lines}

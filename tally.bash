@@ -24,9 +24,9 @@ count() {
         let SUB[$2]+=$(sed "$blank;$hash" $1 | wc -l);;
     Ruby)
         let SUB[$2]+=$(sed "$blank;$hash;$ruby" $1 | wc -l);;
-    C|CSS)
+    CSS)
         let SUB[$2]+=$(stripc $1 | wc -l);;
-    C++|Go|JavaScript|Vala|SCSS|Java)
+    C|C++|Go|JavaScript|Vala|SCSS|Java)
         let SUB[$2]+=$(stripc $1 | sed '/^[[:space:]]*\/\//d' | wc -l);;
     SQL|Lua)
         let SUB[$2]+=$(sed "$blank;/^[[:space:]]*\-\-/d" $1 | wc -l);;

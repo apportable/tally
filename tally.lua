@@ -126,7 +126,9 @@ local function dirtree(dir)
             if entry:sub(1, 1) ~= "." then
                 entry = dir .. "/" .. entry
                 local attr = lfs.attributes(entry)
-                if attr.mode == "file" then
+                if not attr then
+                    break
+                elseif attr.mode == "file" then
                     coroutine.yield(entry)
                 elseif attr.mode == "directory" then
                     yieldtree(entry)

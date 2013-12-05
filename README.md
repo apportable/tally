@@ -1,7 +1,7 @@
 Tally
 =====
 
-A simple SLOC counter that displays a subtotal for each [supported language].
+A simple, command-line SLOC counter written in [Lua].
 
 Installation
 ------------
@@ -45,5 +45,5 @@ OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
 CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-[supported language]: https://github.com/craigbarnes/tally/blob/master/tally.bash#L47-72
+[Lua]: http://www.lua.org/
 [License]: http://en.wikipedia.org/wiki/ISC_license "ISC license"

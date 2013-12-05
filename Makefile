@@ -1,7 +1,7 @@
 VERSION = 0.0.3
 PREFIX  = /usr/local
 BINDIR  = $(PREFIX)/bin
-TALLY   = ./tally.bash
+TALLY   = ./tally.lua
 
 help:
 	@echo "Usage:"
@@ -22,7 +22,7 @@ uninstall:
 
 dist:
 	mkdir -p tally-$(VERSION)
-	cp -r tally.bash tally.lua Makefile README.md test/ tally-$(VERSION)
+	cp -r tally.lua Makefile README.md test/ tally-$(VERSION)
 	tar -czf tally-$(VERSION).tar.gz tally-$(VERSION)
 	rm -rf tally-$(VERSION)
 
@@ -30,14 +30,8 @@ check: test/expected.txt
 	@$(TALLY) test | diff -su0 $< -
 	@printf "\e[1;32mAll tests passed\e[0m\n"
 
-benchmark:
-	@echo -n 'tally.lua: '
-	@time -f '%es' ./tally.lua >/dev/null
-	@echo -n 'tally.bash:  '
-	@time -f '%es' ./tally.bash >/dev/null
-
 clean:
 	rm -f *.tar.gz
 
 
-.PHONY: help install uninstall install-home dist check benchmark clean
+.PHONY: help install uninstall install-home dist check clean

@@ -8,8 +8,22 @@ local P = lpeg.P
 local S = lpeg.S
 local subtotals, sorted, files = {}, {}, {}
 
+local function warn(...)
+    local format = string.format
+    io.stderr:write(format("Error: %s\n", format(...)))
+end
+
+local function abort(...)
+    warn(...)
+    os.exit(1)
+end
+
 local function countc(filename)
-    local file = assert(io.open(filename))
+    local file, err = io.open(filename)
+    if not file then
+        warn(err)
+        return 0
+    end
     local text = file:read("*a")
     file:close()
     local count = 0
@@ -17,8 +31,7 @@ local function countc(filename)
     local stringlit = P'L'^-1 * P'"' * (P'\\' * P(1) + (1 - S'\\"'))^0 * P'"'
     local longcomment = P'/*' * (1 - P'*/')^0 * P'*/' * P'\n'^0
     local linecomment = P'//' * (1 - P'\n')^0 * P'\n'
-    local comment = (longcomment + linecomment)
-    local tokens = (comment + stringlit + newline + 1)^0
+    local tokens = (longcomment + linecomment + stringlit + newline + 1)^0
     lpeg.match(tokens, text)
     return count
 end
@@ -151,7 +164,7 @@ local args = select("#", ...) > 0 and {...} or {"."}
 
 for i = 1, #args do
     local path = args[i]
-    local attr = lfs.attributes(path)
+    local attr = assert(lfs.attributes(path))
     if not attr then
         break
     elseif attr.mode == "directory" then
@@ -160,6 +173,8 @@ for i = 1, #args do
         end
     elseif attr.mode == "file" then
         table.insert(files, path)
+    else
+        abort("Cannot read object of type '%s' at '%s'", attr.mode, path)
     end
 end
 

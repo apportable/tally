@@ -32,6 +32,7 @@ local extensions = {
     coffee = "CoffeeScript",
     css = "CSS",
     go = "Go",
+    h = "C Header",
     hs = "Haskell",
     htm = "HTML", html = "HTML", xhtml = "HTML",
     java = "Java",
@@ -73,6 +74,7 @@ local hashbangs = {
 local comments = {
     AWK = "#",
     C = countc,
+    ["C Header"] = countc,
     CSS = countc,
     ["C++"] = countc,
     CoffeeScript = "#",
@@ -145,8 +147,20 @@ local function countlines(filename, comment)
     return count
 end
 
-for filename in dirtree(... or ".") do
-    table.insert(files, filename)
+local args = select("#", ...) > 0 and {...} or {"."}
+
+for i = 1, #args do
+    local path = args[i]
+    local attr = lfs.attributes(path)
+    if not attr then
+        break
+    elseif attr.mode == "directory" then
+        for file in dirtree(path) do
+            table.insert(files, file)
+        end
+    elseif attr.mode == "file" then
+        table.insert(files, path)
+    end
 end
 
 io.stderr:write(string.format("Scanning %d files...", #files))

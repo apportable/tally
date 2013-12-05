@@ -4,45 +4,22 @@
 
 local lfs = require "lfs"
 local lpeg = require "lpeg"
+local P = lpeg.P
+local S = lpeg.S
 local subtotals, sorted, files = {}, {}, {}
 
--- Discard C comments and count lines
 local function countc(filename)
-
-    -- TODO: doesn't yet discard single line ("//") comments, which should
-    -- be optional, e.g. for CSS
-
-    -- TODO: isn't context aware -- strings containing comment delimeters
-    -- may result in incorrect count
-
     local file = assert(io.open(filename))
     local text = file:read("*a")
     file:close()
-
-    local open = lpeg.P "/*"
-    local close = lpeg.P "*/"
-    local notopen = (1 - open)^0
-    local notclose = (1 - close)^0
-    local comment = open * notclose * close
-    local notcomment = (lpeg.C(notopen) * comment)^0 * lpeg.C(notclose)
-
-    local accum = {}
-
-    lpeg.Cf(notcomment, function(a, b)
-        if a then table.insert(accum, a) end
-        if b then table.insert(accum, b) end
-    end):match(text)
-
-    local stripped = table.concat(accum)
-    if stripped == "" then stripped = text end
-
     local count = 0
-    for line in stripped:gmatch("[^\r\n]+") do
-        if not line:find("^%s*$") and not line:find("^%s*//") then
-            count = count + 1
-        end
-    end
-
+    local newline = P'\n'^1 / function() count = count + 1 end
+    local stringlit = P'L'^-1 * P'"' * (P'\\' * P(1) + (1 - S'\\"'))^0 * P'"'
+    local longcomment = P'/*' * (1 - P'*/')^0 * P'*/' * P'\n'^0
+    local linecomment = P'//' * (1 - P'\n')^0 * P'\n'
+    local comment = (longcomment + linecomment)
+    local tokens = (comment + stringlit + newline + 1)^0
+    lpeg.match(tokens, text)
     return count
 end
 

@@ -8,7 +8,6 @@ help:
 	@echo "   make install           Install to $(BINDIR)"
 	@echo "   make install-home      Install to $(HOME)/.local/bin"
 	@echo "   make dist              Create release tarball"
-	@echo "   make check             Run tests"
 	@echo "   make clean             Remove generated files"
 
 install-home: PREFIX = $(HOME)/.local
@@ -22,16 +21,12 @@ uninstall:
 
 dist:
 	mkdir -p tally-$(VERSION)
-	cp -r tally.lua Makefile README.md test/ tally-$(VERSION)
+	cp -r tally.lua Makefile README.md tally-$(VERSION)
 	tar -czf tally-$(VERSION).tar.gz tally-$(VERSION)
 	rm -rf tally-$(VERSION)
-
-check: test/expected.txt
-	@$(TALLY) test | diff -su0 $< -
-	@printf "\e[1;32mAll tests passed\e[0m\n"
 
 clean:
 	rm -f *.tar.gz
 
 
-.PHONY: help install uninstall install-home dist check clean
+.PHONY: help install uninstall install-home dist clean

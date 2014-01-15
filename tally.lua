@@ -15,6 +15,9 @@
 
 local lfs = require "lfs"
 local lpeg = require "lpeg"
+local yield = coroutine.yield
+local dirlist = lfs.dir
+local getattr = lfs.attributes
 local P = lpeg.P
 local S = lpeg.S
 local subtotals, sorted, files = {}, {}, {}
@@ -125,16 +128,16 @@ local function dirtree(dir)
     assert(dir and dir ~= "", "directory parameter is missing or empty")
     if dir:sub(-1) == "/" then dir = dir:sub(1, -2) end
     local function yieldtree(dir)
-        for entry in lfs.dir(dir) do
+        for entry in dirlist(dir) do
             if entry:sub(1, 1) ~= "." then
                 entry = dir .. "/" .. entry
-                local attr = lfs.attributes(entry)
-                if not attr then
-                    break
-                elseif attr.mode == "file" then
-                    coroutine.yield(entry)
-                elseif attr.mode == "directory" then
-                    yieldtree(entry)
+                local attr = getattr(entry)
+                if attr then
+                    if attr.mode == "file" then
+                        yield(entry)
+                    elseif attr.mode == "directory" then
+                        yieldtree(entry)
+                    end
                 end
             end
         end

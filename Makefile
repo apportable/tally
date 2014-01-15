@@ -19,14 +19,14 @@ install install-home:
 uninstall:
 	rm -f $(DESTDIR)$(BINDIR)/tally
 
-dist:
-	mkdir -p tally-$(VERSION)
-	cp -r tally.lua Makefile README.md tally-$(VERSION)
-	tar -czf tally-$(VERSION).tar.gz tally-$(VERSION)
-	rm -rf tally-$(VERSION)
+tally-%.tar.gz:
+	git archive --prefix=tally-$*/ -o $@ $*
+
+dist: tally-$(VERSION).tar.gz
+dist-dev: tally-$(shell git rev-parse --verify --short master).tar.gz
 
 clean:
-	rm -f *.tar.gz
+	$(RM) tally-*.tar.gz
 
 
-.PHONY: help install uninstall install-home dist clean
+.PHONY: help install uninstall install-home dist dist-dev clean

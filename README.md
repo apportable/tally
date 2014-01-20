@@ -32,7 +32,7 @@ specifically added.
 License
 -------
 
-Copyright (C) 2012-2013 Craig Barnes
+Copyright (C) 2012-2014 Craig Barnes
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the GNU [General Public License version 3], as published

@@ -201,24 +201,19 @@ end
 
 io.stderr:write "\27[2K\r" -- Erase current line and reset cursor
 
+local langmax, linemax = 0, 0
 for lang, lines in pairs(subtotals) do
     sorted[#sorted+1] = {lang=lang, lines=lines}
+    local langlen, linelen = #lang, #tostring(lines)
+    langmax = (langlen > langmax) and langlen or langmax
+    linemax = (linelen > linemax) and linelen or linemax
 end
 
 table.sort(sorted, function(a, b)
     return a.lines > b.lines
 end)
 
-local format do -- Find shortest format alignment lengths
-    local langmax, linemax = 0, 0
-    for i = 1, #sorted do
-        local langlen, linelen = #sorted[i].lang, #tostring(sorted[i].lines)
-        langmax = langlen > langmax and langlen or langmax
-        linemax = linelen > linemax and linelen or linemax
-    end
-    format = "%-" .. langmax .. "s  %" .. linemax .. "d\n"
-end
-
+local format = "%-" .. langmax .. "s  %" .. linemax .. "d\n"
 for i = 1, #sorted do
     io.write(string.format(format, sorted[i].lang, sorted[i].lines))
 end

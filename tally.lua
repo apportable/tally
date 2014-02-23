@@ -184,7 +184,8 @@ end
 
 io.stderr:write("Scanning ", tostring(#files), " files...")
 
-for i, filename in ipairs(files) do
+for i = 1, #files do
+    local filename = files[i]
     local filetype = findtype(filename)
     if filetype then
         local c = comments[filetype]

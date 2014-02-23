@@ -22,20 +22,10 @@ local P = lpeg.P
 local S = lpeg.S
 local subtotals, sorted, files = {}, {}, {}
 
-local function warn(...)
-    local format = string.format
-    io.stderr:write(format("Error: %s\n", format(...)))
-end
-
-local function abort(...)
-    warn(...)
-    os.exit(1)
-end
-
 local function countc(filename)
     local file, err = io.open(filename)
     if not file then
-        warn(err)
+        io.stderr:write("Error: ", err, "\n")
         return 0
     end
     local text = file:read("*a")
@@ -188,11 +178,11 @@ for i = 1, #paths do
     elseif attr.mode == "file" then
         table.insert(files, path)
     else
-        abort("Cannot read object of type '%s' at '%s'", attr.mode, path)
+        io.stderr:write("Warning: skipped '", path, "' (", attr.mode, ")\n")
     end
 end
 
-io.stderr:write(string.format("Scanning %d files...", #files))
+io.stderr:write("Scanning ", tostring(#files), " files...")
 
 for i, filename in ipairs(files) do
     local filetype = findtype(filename)

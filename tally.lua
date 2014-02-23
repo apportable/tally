@@ -1,4 +1,4 @@
-#!/usr/bin/lua
+#!/usr/bin/env lua
 --[[
  Tally: a simple, command-line SLOC counter.
  Copyright (C) 2012-2014 Craig Barnes

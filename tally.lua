@@ -174,10 +174,10 @@ local function countlines(filename, comment)
     return count
 end
 
-local args = select("#", ...) > 0 and {...} or {"."}
+local paths = (#arg > 0) and arg or {"."}
 
-for i = 1, #args do
-    local path = args[i]
+for i = 1, #paths do
+    local path = paths[i]
     local attr = assert(lfs.attributes(path))
     if not attr then
         break

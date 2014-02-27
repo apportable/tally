@@ -59,6 +59,7 @@ local extensions = {
     lua = "Lua",
     markdown = "Markdown", md = "Markdown", mkd = "Markdown", mkdn = "Markdown",
     mk = "Make", mak = "Make", make = "Make",
+    m = "Objective-C", mm = "Objective-C++",
     page = "Mallard",
     perl = "Perl", pl = "Perl", pm = "Perl",
     py = "Python",
